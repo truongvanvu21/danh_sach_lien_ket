@@ -1,0 +1,81 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node{
+	int data;
+	struct Node *next;
+};
+typedef Node* node;
+node makeNode(int x){
+	node tmp=new Node();
+	tmp->data=x;
+	tmp->next=NULL;
+	return tmp;
+}
+int Size(node a){
+	int cnt=0;
+	while(a != NULL){
+		cnt++;
+		a=a->next;
+	}
+	return cnt;
+}
+//void InsertFirst(node &a, string vname, int vmark){
+//	node tmp=makeNode(vname, vmark);
+//	if(a==NULL){
+//		a=tmp;
+//	}
+//	else{
+//	tmp->next=a;
+//	a=tmp;	
+//	}
+//}
+void InsertLast(node &a, int x){
+	node tmp=makeNode (x);
+	if(a==NULL){
+		a=tmp;
+	}
+	else {
+		node p=a;
+		while(p->next != NULL){
+			p=p->next;
+		}
+		p->next=tmp;
+	}
+}
+int main() {
+	node head=NULL;
+	int n; cin >> n;
+	int a[n];
+	for(int i=1; i<=n; i++){
+		int x; cin>> x;
+		InsertLast(head, x);
+	}
+	node p=head;
+	int cnt=0;
+	while(p->next->next != NULL){
+		if(p->data < p->next->data && p->next->data > p->next->next->data){
+			a[cnt]=p->next->data;
+			cnt++;
+		}
+		p=p->next;
+	}
+	int max=a[0];
+	if(cnt==0) cout << "-1" << endl;
+	else {
+		for(int i=0; i<cnt; i++){
+			if(a[i] > max){
+				max=a[i];
+			}	
+		}
+		cout << max << endl;	
+	}
+	return 0;	
+}
+/*
+8
+6 27 12 25 4 57 27 44
+*/
