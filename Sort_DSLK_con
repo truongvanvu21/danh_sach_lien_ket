@@ -1,0 +1,109 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node{
+	int data;
+	struct Node *next;
+};
+typedef Node* node;
+node makeNode(int x){
+	node tmp=new Node();
+	tmp->data=x;
+	tmp->next=NULL;
+	return tmp;
+}
+int Size(node a){
+	int cnt=0;
+	while(a != NULL){
+		cnt++;
+		a=a->next;
+	}
+	return cnt;
+}
+//void InsertFirst(node &a, string vname, int vmark){
+//	node tmp=makeNode(vname, vmark);
+//	if(a==NULL){
+//		a=tmp;
+//	}
+//	else{
+//	tmp->next=a;
+//	a=tmp;	
+//	}
+//}
+void InsertLast(node &a, int x){
+	node tmp=makeNode (x);
+	if(a==NULL){
+		a=tmp;
+	}
+	else {
+		node p=a;
+		while(p->next != NULL){
+			p=p->next;
+		}
+		p->next=tmp;
+	}
+}
+void Sort(node a){
+	for(node p=a; p != NULL; p=p->next){
+		for(node q=p->next; q != NULL; q=q->next){
+			if(q->data < p->data){
+				swap(q->data, p->data);
+			}
+		}
+	}
+}
+void Search(node a, node b){
+	bool ok=0;
+	int d, r;
+	int cnt=0;
+	while(b != NULL){
+		if(a->data != b->data && ok==0){
+			ok=1;
+			d=cnt;
+		}
+		if(a->data != b->data){
+			r=cnt;
+		}
+		a=a->next;
+		b=b->next;
+		cnt++;
+	}
+	if(!ok){
+		cout << "-1" << endl;
+		return;
+	}
+	else {
+		cout << d << " " << r << endl;
+	}
+}
+//void in(node a){
+//	while (a != nullptr){
+//		cout << a ->data <<" ";
+//		a = a->next;
+//	}
+//}
+int main() {
+	node l1=NULL;
+	node l2=NULL;
+	int n; cin >> n;
+	for(int i=0; i<n; i++){
+		int x; cin >> x;
+		InsertLast(l1, x);
+		InsertLast(l2, x);
+	}
+	Sort(l2);
+//	in(l1);
+//	in(l2);
+	Search(l1, l2);
+	
+	return 0;	
+}
+/*
+11 
+10 12 20 30 25 40 32 31 35 50 60
+11
+1 2 3 4 5 6 7 8 9 10 11
+*/
