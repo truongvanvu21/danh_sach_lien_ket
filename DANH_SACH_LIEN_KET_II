@@ -1,0 +1,138 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node{
+	int data;
+	struct Node *next;
+};
+typedef Node* node;
+node makeNode(int x){
+	node tmp=new Node();
+	tmp->data=x;
+	tmp->next=NULL;
+	return tmp;
+}
+int Size(node a){
+	int cnt=0;
+	while(a != NULL){
+		cnt++;
+		a=a->next;
+	}
+	return cnt;
+}
+void InsertFirst(node &a, int x){
+	node tmp=makeNode(x);
+	if(a==NULL){
+		a=tmp;
+	}
+	else{
+	tmp->next=a;
+	a=tmp;	
+	}
+}
+void InsertLast(node &a, int x){
+	node tmp=makeNode (x);
+	if(a==NULL){
+		a=tmp;
+	}
+	else {
+		node p=a;
+		while(p->next != NULL){
+			p=p->next;
+		}
+		p->next=tmp;
+	}
+}
+void InsertBeforPos(node &a, int x, int pos)
+{
+	int n=Size(a);
+	if(pos <=0 || pos > n+1){
+		InsertLast(a, x);return;
+	}
+	if(pos == 1){
+		InsertFirst(a, x);return;
+	}
+	if(pos == n+1){
+		InsertLast(a, x);return ;
+	}
+	node p=a;
+	for(int i=1; i<pos-1; i++){
+		p=p->next;
+	}
+	node tmp=makeNode(x);
+	tmp->next=p->next;
+	p->next=tmp;
+	
+}
+void Delete(node &a, int pos){
+	int n=Size(a);
+	if(pos <=0 || pos > n+1){
+		return;
+	}
+	node truoc=NULL, sau=a;
+	for(int i=1; i<pos; i++){
+		truoc=sau;
+		sau=sau->next;
+	}
+	if(truoc==NULL){
+		a=a->next;
+	}
+	else{
+		truoc->next=sau->next;
+	}
+}
+float Average(node a){
+	int cnt=0;
+	node p=a;
+	float s=0;
+	while(p != NULL){
+		cnt++;
+		s+=p->data;
+		p=p->next;
+	}
+	s/=cnt;
+	return s;
+}
+int main() {
+	node head=NULL;
+	int n; cin >> n;
+	for(int  i=1; i<=n;i++){
+		int x; cin >> x;
+		InsertLast(head, x);
+	}
+	string s;
+	while(cin >> s){
+		int x; int pos;
+		if(s[0]=='i'){
+			cin >> x >> pos;
+			InsertBeforPos(head, x, pos);
+		}
+		else if(s[0]=='d'){
+			cin >> pos;
+			Delete(head, pos);
+		}
+		else if(s[0]=='a'){
+			cout << fixed << setprecision(4) << Average(head) << endl;
+		}
+		else if(s[0]=='0'){
+			int tmp; cin>> tmp;
+			if(tmp==0) break;
+		}
+	}
+	return 0;
+}
+/*
+6
+1 1 1 1 1 1
+i 4 1
+a
+i 6 7
+i 12 1
+i 1 14
+a
+d 1
+a
+*/
