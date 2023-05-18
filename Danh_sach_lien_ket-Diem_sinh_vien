@@ -1,0 +1,141 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node{
+	string name;
+	int mark;
+	struct Node *next;
+};
+typedef Node* node;
+node makeNode(string vname, int vmark){
+	node tmp=new Node();
+	tmp->name=vname;
+	tmp->mark=vmark;
+	tmp->next=NULL;
+	return tmp;
+}
+int Size(node a){
+	int cnt=0;
+	while(a != NULL){
+		cnt++;
+		a=a->next;
+	}
+	return cnt;
+}
+void InsertFirst(node &a, string vname, int vmark){
+	node tmp=makeNode(vname, vmark);
+	if(a==NULL){
+		a=tmp;
+	}
+	else{
+	tmp->next=a;
+	a=tmp;	
+	}
+}
+//void InsertLast(node &a, int x){
+//	node tmp=makeNode (x);
+//	if(a==NULL){
+//		a=tmp;
+//	}
+//	else {
+//		node p=a;
+//		while(p->next != NULL){
+//			p=p->next;
+//		}
+//		p->next=tmp;
+//	}
+//}
+//void InsertBeforPos(node &a, int x, int pos)
+//{
+//	int n=Size(a);
+//	if(pos <=0 || pos > n+1){
+//		InsertLast(a, x);return;
+//	}
+//	if(pos == 1){
+//		InsertFirst(a, x);return;
+//	}
+//	if(pos == n+1){
+//		InsertLast(a, x);return ;
+//	}
+//	node p=a;
+//	for(int i=1; i<pos-1; i++){
+//		p=p->next;
+//	}
+//	node tmp=makeNode(x);
+//	tmp->next=p->next;
+//	p->next=tmp;
+//	
+//}
+void DeleteFirst(node &a){
+	if(a==NULL){
+		return;
+	}
+	a=a->next;
+}
+//void Delete(node &a, int pos){
+//	int n=Size(a);
+//	if(pos <=0 || pos > n+1){
+//		return;
+//	}
+//	node truoc=NULL, sau=a;
+//	for(int i=1; i<pos; i++){
+//		truoc=sau;
+//		sau=sau->next;
+//	}
+//	if(truoc==NULL){
+//		a=a->next;
+//	}
+//	else{
+//		truoc->next=sau->next;
+//	}
+//}
+int Count(node a, int vmark){
+	node p=a;	
+	int cnt=0;
+	while(p != NULL){
+		if(p->mark != vmark){
+			++cnt;
+		}
+		p=p->next;
+	}
+	return cnt;
+}
+int main() {
+	node head=NULL;
+	string s;
+	while(cin >> s){
+		string name;
+		int mark;
+		if(s=="ins"){
+			cin >> name >> mark;
+			InsertFirst(head, name, mark);
+		}
+		else if(s=="del"){
+			DeleteFirst(head);
+		}
+		else if(s=="count"){
+			cin >> mark;
+			cout << Count(head, mark) << endl;
+		}
+		else if(s=="fin"){
+			break;
+		}
+	}
+	return 0;	
+}
+/*
+ins hoa 6
+ins hung 3
+ins ha 2
+ins quy 4
+del
+ins tuan 9
+count 3
+ins mai 5
+ins van 10
+del
+count 5
+*/
