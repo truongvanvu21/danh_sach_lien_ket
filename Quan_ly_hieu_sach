@@ -1,0 +1,117 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node{
+	string masach;
+	string tensach;
+	int soluong;
+	int dongia;
+	Node* next;
+};
+typedef Node* node;
+node makeNode(string masach, string tensach, int soluong, int dongia){
+	node tmp= new Node();
+	tmp->masach=masach;
+	tmp->tensach=tensach;
+	tmp->soluong=soluong;
+	tmp->dongia=dongia;
+	tmp->next=NULL;
+	return tmp;
+}
+void InsertLast(node &a, string masach, string tensach, int soluong, int dongia){
+	node tmp= makeNode(masach, tensach, soluong, dongia);
+	if(a==NULL){
+		a=tmp;
+	}
+	else {
+		node p=a;
+		while(p->next !=NULL){
+			p=p->next;
+		}
+		p->next=tmp;
+	}
+}
+void DeleteLast(node &a){
+	node truoc=NULL, sau=a;
+	while(sau->next != NULL){
+		truoc=sau;
+		sau=sau->next;
+	}
+	if(truoc==NULL){
+		a=NULL;
+	}
+	else {
+		truoc->next = NULL;
+	}
+}
+int Count(node a, int dongia){
+	node p=a;
+	int cnt=0;
+	while(p != NULL){
+		if(dongia >= p->dongia){
+			cnt++;
+		}
+		p=p->next;
+	}
+	return cnt;
+}
+void TotalValue(node a, string masach){
+	node p=a;
+	int res=0;
+	while(p != NULL){
+		if(p->masach==masach)	res += p->soluong * p->dongia;
+		p=p->next;
+	}
+	if(res==0){
+		cout << "-1" << endl;
+	}
+	else{
+		cout << res << endl;	
+	}
+	
+}
+int check(node a, string masach){
+	while(a != NULL){
+		if(a->masach == masach) return -1;
+		a=a->next;
+	}
+	return 1;
+}
+int main() {
+	node head=NULL;
+	string s;
+	while(cin >> s){
+		string masach, tensach;
+		int soluong, dongia;
+		if(s=="insert"){
+			cin >> masach >> tensach >> soluong >> dongia;
+			if(check(head, masach)==1)
+			InsertLast(head, masach, tensach, soluong, dongia);
+		}
+		else if(s=="delete"){
+			DeleteLast(head);
+		}
+		else if(s=="count"){
+			cin >> dongia;
+			cout << Count(head, dongia) << endl;
+		}
+		else if(s=="totalvalue"){
+			cin >> masach;
+			TotalValue(head, masach);
+		}
+		else if(s=="finish") break;
+	}
+	return 0;
+}
+/*
+insert s25 van 53 38
+insert s89 toan 27 8
+totalvalue s25
+totalvalue s89
+delete
+count 40
+finish
+*/
