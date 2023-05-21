@@ -1,0 +1,131 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct Node{
+	string hoten;
+	int tuoi;
+	int sotoa;
+	int soghe;
+	Node *next;
+};
+typedef Node* node;
+node makeNode (string vten, int vtuoi, int vtoa, int vghe){
+	node tmp= new Node();
+	tmp->hoten=vten;
+	tmp->tuoi=vtuoi;
+	tmp->sotoa=vtoa;
+	tmp->soghe=vghe;
+	tmp->next=NULL;
+	return tmp;
+}
+bool check(node a, int vtoa, int vghe){
+	node p=a;
+	while(p!=NULL){
+		if(p->soghe==vghe && p->sotoa==vtoa){
+			return false;
+		}
+		p=p->next;
+	}
+	return true;
+}
+void LastIns(node &a,string vten, int vtuoi, int vtoa, int vghe){
+	node tmp=makeNode(vten, vtuoi, vtoa,  vghe);
+	if(check(a, vtoa, vghe)==false){
+		cout << "FAIL" << endl;
+		return;
+	}
+	if(a==NULL){
+		a=tmp;
+	}
+	else {
+		node p=a;
+		while(p->next != NULL){
+			p=p->next;
+		}
+		p->next=tmp;
+	}
+}
+int SumPax(node a, int vtoa){
+	int cnt=0;
+	node p=a;
+	while(p!= NULL){
+		if(p->sotoa==vtoa){
+			cnt++;
+		}
+		p=p->next;
+	}
+	return cnt;
+}
+void DelPax(node &a, int vtoa, int vghe){
+	if(a==NULL || check(a, vtoa, vghe)){
+		cout << "NONE" << endl;
+		return;
+	}
+	else{
+		node truoc=NULL, sau=a;
+		bool ok=false;
+		while(sau != NULL){
+			if(sau->soghe==vghe && sau->sotoa==vtoa){
+				ok=true;
+				break;
+			}
+			truoc=sau;
+			sau=sau->next;
+			
+		}
+		if(ok){
+			if(truoc==NULL){
+				a=sau->next;
+			}
+			else {
+				truoc->next=sau->next;
+			}
+			delete sau;
+		}
+		else{
+			cout << "NONE" << endl;
+		}
+	}
+}
+int main() {
+	node head=NULL;
+	string s;
+	while(cin >> s){
+		string vten;
+		int vtuoi, vtoa, vghe;
+		if(s=="ins"){
+			cin >> vten >> vtuoi >> vtoa >> vghe;
+			LastIns(head, vten, vtuoi, vtoa, vghe );
+		}
+		else if(s=="del"){
+			cin >> vtoa >> vghe;
+			DelPax(head, vtoa, vghe);
+		}
+		else if(s=="sum"){
+			cin >> vtoa;
+			cout << SumPax(head, vtoa) << endl;
+		}
+		else if(s=="end") break;
+	}
+	return 0;
+}
+/*
+ins nguyenvanbao 20  2  1
+ins tranthichi 25  1 10
+ins vothilan  30  1  1
+ins nguyenvansan  45 2 1
+sum  2
+sum  1
+del  1  1
+sum 1
+ins tranvanbi  50  10  1
+ins buithihue  45  10  2
+del 1 10
+del 1  1
+sum 1
+sum 10
+end
+*/
