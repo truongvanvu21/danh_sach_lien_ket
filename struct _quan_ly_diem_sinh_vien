@@ -1,0 +1,38 @@
+// quan li sinh vien
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct sinhvien{
+	float dqt, dt, dtong;
+	string dchu;
+};
+void nhap(sinhvien &sv){
+	cin >> sv.dqt >> sv.dt;
+	sv.dtong=sv.dqt*0.4 + sv.dt*0.6;
+	sv.dtong=round(sv.dtong * 10)/10;
+	if(sv.dtong < 4) sv.dchu="F";
+	else if(sv.dtong < 5.5) sv.dchu="D";
+	else if(sv.dtong < 7.0) sv.dchu="C";
+	else if(sv.dtong < 8.5) sv.dchu="B";
+	else if(sv.dtong <= 10) sv.dchu="A";
+}
+void in(sinhvien &sv){
+	cout << fixed << setprecision(1) << sv.dtong << " " << sv.dchu << endl;
+}
+int main() {
+	int n; cin >> n;
+	sinhvien sv;
+	while(n--){
+		nhap(sv);
+		in(sv);
+	}
+	return 0;	
+}
+/*
+3
+5.0 7.5
+3.0 4.5
+7.0 6.992
+*/
