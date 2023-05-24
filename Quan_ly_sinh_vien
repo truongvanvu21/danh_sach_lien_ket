@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+#define MO ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+using namespace std;
+
+typedef long long ll;
+
+struct sinhvien {
+	string ho;
+	string ten;
+	double diem;
+};
+
+
+int main(){
+//	freopen("dl.inp", "r", stdin);
+	sinhvien cntt;	
+	string s;
+	vector<sinhvien> ds;
+	while(getline(cin, s)){
+		if(s=="\0") break;
+		vector<string> ve;
+		stringstream ss(s);
+		string tmp;
+		while(getline(ss, tmp, '|')){
+			ve.push_back(tmp);
+		}
+
+		cntt.ho=ve[0];
+		cntt.ten=ve[1];
+		cntt.diem=stof(ve[2]);
+		ds.push_back(cntt);
+	}
+	cout << "<?xml version=1 encoding=UTF-8?>" << endl;
+	for(int i=0; i<ds.size(); i++){
+		if(ds[i].diem >= 5){
+			cout << "<Student>" << endl;
+			cout << " " << "<LastName>" << ds[i].ho  << "</LastName>" << endl;
+			cout << " " << "<FirstName>" << ds[i].ten << "</FirstName>" << endl;
+			cout << " " << "<Mark>" << fixed << setprecision(2) <<  ds[i].diem << "</Mark>" << endl;
+			cout << "</Student>" << endl;
+		}
+		
+	}
+	return 0;
+	
+}
+/*
+Nguyen Viet Huu|Hung|6.75
+Le Van|Tu|5.00
+Mai Thi|Van|8.25
+Bach Manh|Khuong|7.50 
+*/
