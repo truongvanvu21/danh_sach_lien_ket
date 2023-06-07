@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node{
+	string tenks;
+	string tend;
+	int kc, dongia;
+	Node* next;
+};
+typedef Node* node;
+node makeNode(string tenks, string tend, int kc, int dongia){
+	node tmp= new Node();
+	tmp->tenks=tenks;
+	tmp->tend=tend;
+	tmp->kc=kc;
+	tmp->dongia=dongia;
+	tmp->next=NULL;
+	return tmp;
+}
+void add(node &a, string tenks, string tend, int kc, int dongia){
+	node tmp=makeNode(tenks, tend, kc, dongia);
+	if(a==NULL){
+		a=tmp;
+	}
+	else{
+		node p=a;
+		while(p->next != NULL){
+			p=p->next;
+		}
+		p->next=tmp;
+	}
+}
+void checkKc(node a){
+	while(a != NULL){
+		if(a->kc <= 3){
+			cout << a->tenks << ", " << a->tend << ", " << a->kc << ", " << a->dongia << endl;
+			
+		}
+		a=a->next;
+	}
+}
+void checkDongia(node a){
+	while(a != NULL){
+		if(a->dongia <= 300){
+			cout << a->tenks << ", " << a->tend << ", " << a->kc << ", " << a->dongia << endl;
+			
+		}
+		a=a->next;
+	}
+}
+int main() {
+	node head=NULL;
+    int n; cin >> n;
+    cin.ignore();
+    while(n--){
+    	string s;
+    	getline(cin, s);
+//    	if(s == "\0") break;
+    	stringstream ss(s);
+    	string tmp;
+    	vector<string> ve;
+    	while(getline(ss, tmp, '|')){
+    		ve.push_back(tmp);
+		}
+    	string tenks, tend;
+    	int kc, dongia;
+    	tenks = ve[0];
+    	tend = ve[1];
+    	kc = stoi(ve[2]);
+    	dongia = stoi(ve[3]);
+    	add(head, tenks, tend, kc, dongia);
+	}
+	checkDongia(head);
+	cout << "***" << endl;
+	checkKc(head);
+}
+/*
+5
+Century Riverside Hue | 49 Le Loi | 2 | 900
+Hai Nguyet Motel | 156 Phan Chu Trinh | 3 | 300
+Thanh Lich Hue Hotel | Hoang Dieu | 4 | 700
+Park View | Chu Van An | 3 | 500
+Hong Thien 1 Hotel | Duong Van An | 5 | 400
+
+*/
